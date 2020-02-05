@@ -49,7 +49,7 @@
               <span class="icon">
                 <i class="fas fa-chart-area"></i>
               </span>
-              <span>Visualization 1</span>
+              <span>Regression Visualization</span>
             </a>
           </div>
 
@@ -70,28 +70,24 @@
   <section class="section">
     <div class="container content">
       <!-- modify if necessary (move visualizations in separate pages) -->
-      <h2 id="viz1">Visualization of the world population versus the temperature changes from 1960 to 2015</h2>
-
+      <h2 id="viz1">Linear regression visualization</h2>
       
-       <img src="https://raw.githubusercontent.com/quent78/Individual-Assignement-LETOURNEUX/master/Population%20vs%20temperature%20changes.png">
+      <img src="https://raw.githubusercontent.com/quent78/Individual-Assignement-LETOURNEUX/master/Population%20vs%20temperature%20changes.png">
       </img>
-      
-      <svg width="100%" height="400" style="background-color: whitesmoke; border: 1px solid black;">
-      </svg>
 
       <h3>Interpretation</h3>
 
       <p>
-        Making a linear regression between the world population and the temperature changes allows us to see the strong linear relationship between both (correlation coefficient of 0.94 and very small p-value).
+        Making a linear regression between the world population and the temperature changes allows us to see the strong linear relationship between both series (correlation coefficient of 0.94 and very small p-value).
         Moreover, this jointploint gives us the histograms and density plots of the two series, we notice a similar distribution between the world population and temperature changes.
       </p>
 
       <h3>Discussion</h3>
 
       <p>
-        What I like with this viz is the fact we have different complementary informations in the same graph. It allows to clearly find a linear relationship between the two series.
+        What I like with this viz is the fact we have different complementary informations in the same graph. It allows to clearly find a linear relationship between the world temperature and the temperature changes.
         The main challenges were to clean the data (date format, extract the year, merge, filter) and to understand how to personalize each elements of the jointplot (colors, size, backgrounds, positions, title, source...).
-        When you understand you have to conbine seaborn and matplotlib to manage the different elements of your viz, it becomes very interesting.
+        In fact, when you understand you have to combine seaborn and matplotlib to manage the different elements of your viz, it becomes very interesting.
       </p>
 
       <h3>Sources</h3>
