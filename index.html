@@ -111,40 +111,40 @@ import numpy as np <br/>
 import matplotlib.pyplot as plt <br/>
 from datetime import datetime as dt <br/>
 
-#Import CSV population file
-pop = pd.read_csv("world_population.csv")
-#Convert the Year column in date format and keep the year
-pop['Year'] = pd.to_datetime(pop['Year'], format ='%Y')
-pop['Year'] = pop['Year'].dt.year
-pop.head
+#Import CSV population file <br/>
+pop = pd.read_csv("world_population.csv") <br/>
+#Convert the Year column in date format and keep the year <br/>
+pop['Year'] = pd.to_datetime(pop['Year'], format ='%Y') <br/>
+pop['Year'] = pop['Year'].dt.year <br/>
+pop.head <br/>
 
-#Import CSV temperature change file
-temp = pd.read_csv("global-temperature-1.csv")
-#Convert the date column in date format and keep the year
-temp['date'] = pd.to_datetime(temp['date'])
-temp['Year'] = temp['date'].dt.year
-#Make a filter in order to keep only the annual mean of each year
-temp = temp[temp['value_type'].str.contains('annual_mean') == True]
-#Only keep the fields we need
-temp = temp[["Year","value"]]
-#Rename the column value
-temp.columns = ['Year','Temperature change']
-temp.head
+#Import CSV temperature change file <br/>
+temp = pd.read_csv("global-temperature-1.csv") <br/>
+#Convert the date column in date format and keep the year <br/>
+temp['date'] = pd.to_datetime(temp['date']) <br/>
+temp['Year'] = temp['date'].dt.year <br/>
+#Make a filter in order to keep only the annual mean of each year <br/>
+temp = temp[temp['value_type'].str.contains('annual_mean') == True] <br/>
+#Only keep the fields we need <br/>
+temp = temp[["Year","value"]] <br/>
+#Rename the column value <br/>
+temp.columns = ['Year','Temperature change'] <br/>
+temp.head <br/> <br/>
 
-#Merge the two dataframe using inner joint on the Year
-master = pd.merge(pop, temp, how='inner',on='Year')
-master.head
+#Merge the two dataframe using inner joint on the Year <br/>
+master = pd.merge(pop, temp, how='inner',on='Year') <br/>
+master.head <br/> <br/>
 
-#Viz construction
-sns.set_style('darkgrid') #Dark background
-g = sns.jointplot(x=master['Population'], y=master['Temperature change'], data=master, kind="reg", color="c", ratio=3, joint_kws={'color':'royalblue'})
-g.ax_marg_x.set_facecolor('white') #White background for the density/histo plots
-g.ax_marg_y.set_facecolor('white')
-plt.suptitle('Population vs temperature changes (1960-2015)', size=18, y=1.08, x=0.42) #Title and its position
-plt.xlabel("World population", size=14) #x and y label and their size
-plt.ylabel("Temperature changes", size=14)
-plt.annotate('Source: World Bank & Goddard Institute for Space Studies', (0,0), (10, -60), xycoords='axes fraction', textcoords='offset points', va='top') #Add the source
-plt.savefig('Population vs temperature changes.png', bbox_inches='tight')
+#Viz construction <br/>
+sns.set_style('darkgrid') #Dark background <br/>
+g = sns.jointplot(x=master['Population'], y=master['Temperature change'], data=master, kind="reg", color="c", ratio=3, joint_kws={'color':'royalblue'}) <br/>
+g.ax_marg_x.set_facecolor('white') #White background for the density/histo plots <br/>
+g.ax_marg_y.set_facecolor('white') <br/>
+plt.suptitle('Population vs temperature changes (1960-2015)', size=18, y=1.08, x=0.42) #Title and its position <br/>
+plt.xlabel("World population", size=14) #x and y label and their size <br/>
+plt.ylabel("Temperature changes", size=14) <br/>
+plt.annotate('Source: World Bank & Goddard Institute for Space Studies', (0,0), (10, -60), xycoords='axes fraction', textcoords='offset points', va='top') #Add the source <br/>
+plt.savefig('Population vs temperature changes.png', bbox_inches='tight') <br/>
 
 #output Visualization on the link
         
