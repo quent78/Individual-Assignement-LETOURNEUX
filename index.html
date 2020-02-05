@@ -104,19 +104,19 @@
         https://data.world/gpsdd/c82de6b0-12c3-457e-9198-c48aee253d57 <br> https://data.world/gregory/world-population
       </p>
       
-        Code :
+        Code : <br/> <br/>
 import pandas as pd <br/>
 import seaborn as sns <br/>
 import numpy as np <br/>
 import matplotlib.pyplot as plt <br/>
-from datetime import datetime as dt <br/>
+from datetime import datetime as dt <br/> <br/>
 
 #Import CSV population file <br/>
 pop = pd.read_csv("world_population.csv") <br/>
 #Convert the Year column in date format and keep the year <br/>
 pop['Year'] = pd.to_datetime(pop['Year'], format ='%Y') <br/>
 pop['Year'] = pop['Year'].dt.year <br/>
-pop.head <br/>
+pop.head <br/> <br/>
 
 #Import CSV temperature change file <br/>
 temp = pd.read_csv("global-temperature-1.csv") <br/>
