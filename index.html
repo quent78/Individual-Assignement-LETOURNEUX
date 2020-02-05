@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<!-- head -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>MSc Finance & Big Data - Data visualization 2020</title>
+
+  <!-- bulma and font awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" crossorigin="anonymous">
+</head>
+
+<!-- body -->
+<body>
+
+  <!-- header -->
+  <section class="hero is-info is-bold">
+    <!-- todo: change assignment and name -->
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Data Visualization Assignment
+        </h1>
+        <h2 class="subtitle">
+          Quentin LETOURNEUX
+        </h2>
+      </div>
+    </div>
+
+    <!-- change navigation if needed -->
+    <div class="hero-foot">
+      <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+
+          <div class="navbar-brand">
+            <a class="navbar-item" href="#top">
+              <span class="icon">
+                <i class="fas fa-home"></i>
+              </span>
+              <span>Home</span>
+            </a>
+          </div>
+
+          <div id="main-navbar" class="navbar-menu">
+            <a class="navbar-item" href="#viz1">
+              <span class="icon">
+                <i class="fas fa-chart-area"></i>
+              </span>
+              <span>Visualization 1</span>
+            </a>
+          </div>
+
+          <div class="navbar-end">
+            <a class="navbar-item" href="#about">
+              <span class="icon">
+                <i class="fas fa-info-circle"></i>
+              </span>
+              <span>About</span>
+            </a>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content">
+      <!-- modify if necessary (move visualizations in separate pages) -->
+      <h2 id="viz1">Visualization of the world population versus the temperature changes from 1960 to 2015</h2>
+
+      <svg width="100%" height="400" style="background-color: whitesmoke; border: 1px solid black;">
+      </svg>
+
+      <h3>Interpretation</h3>
+
+      <p>
+        Making a linear regression between the world population and the temperature changes allows us to see the strong linear relationship between both (correlation coefficient of 0.94 and very small p-value).
+        Moreover, this jointploint gives us the histograms and density plots of the two series, we notice a similar distribution between the world population and temperature changes.
+      </p>
+
+      <h3>Discussion</h3>
+
+      <p>
+        What I like with this viz is the fact we have different complementary informations in the same graph. It allows to clearly find a linear relationship between the two series.
+        The main challenges were to clean the data (date format, extract the year, merge, filter) and to understand how to personalize each elements of the jointplot (colors, size, backgrounds, positions, title, source...).
+        When you understand you have to conbine seaborn and matplotlib to manage the different elements of your viz, it becomes very interesting.
+      </p>
+
+      <h3>Sources</h3>
+
+      <p>
+        Here, the sources that helped me to build my viz:
+        https://seaborn.pydata.org/generated/seaborn.jointplot.html 
+        http://alanpryorjr.com/visualizations/seaborn/jointplot/jointplot/
+        https://matplotlib.org/2.0.0/examples/color/named_colors.html
+       
+        Code :
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime as dt
+
+#Import CSV population file
+pop = pd.read_csv("world_population.csv")
+#Convert the Year column in date format and keep the year
+pop['Year'] = pd.to_datetime(pop['Year'], format ='%Y')
+pop['Year'] = pop['Year'].dt.year
+pop.head
+
+#Import CSV temperature change file
+temp = pd.read_csv("global-temperature-1.csv")
+#Convert the date column in date format and keep the year
+temp['date'] = pd.to_datetime(temp['date'])
+temp['Year'] = temp['date'].dt.year
+#Make a filter in order to keep only the annual mean of each year
+temp = temp[temp['value_type'].str.contains('annual_mean') == True]
+#Only keep the fields we need
+temp = temp[["Year","value"]]
+#Rename the column value
+temp.columns = ['Year','Temperature change']
+temp.head
+
+#Merge the two dataframe using inner joint on the Year
+master = pd.merge(pop, temp, how='inner',on='Year')
+master.head
+
+#Viz construction
+sns.set_style('darkgrid') #Dark background
+g = sns.jointplot(x=master['Population'], y=master['Temperature change'], data=master, kind="reg", color="c", ratio=3, joint_kws={'color':'royalblue'})
+g.ax_marg_x.set_facecolor('white') #White background for the density/histo plots
+g.ax_marg_y.set_facecolor('white')
+plt.suptitle('Population vs temperature changes (1960-2015)', size=18, y=1.08, x=0.42) #Title and its position
+plt.xlabel("World population", size=14) #x and y label and their size
+plt.ylabel("Temperature changes", size=14)
+plt.annotate('Source: World Bank & Goddard Institute for Space Studies', (0,0), (10, -60), xycoords='axes fraction', textcoords='offset points', va='top') #Add the source
+plt.savefig('Population vs temperature changes.png', bbox_inches='tight')
+
+#output Visualization on the link
+        
+      </p>
+    </div>
+  </section>
+
+  <hr class="container">
+
+  <!-- about section -->
+  <!-- fill in, or link to a personal web page  -->
+  <section class="section">
+    <div class="container content">
+      <h2 id="about">
+        About Me
+      </h2>
+
+      <div class="media">
+        <div class="media-left">
+          <p class="image is-128x128">
+            <!-- replace with your profile image -->
+            <img src="https://raw.githubusercontent.com/mscfinance-big-data-viz/indiv-assignment-template/master/Visualization%20of%20cholera%20deaths.png">
+          </p>
+        </div>
+
+        <div class="media-content">
+            <p>
+              <!-- replace with your information -->
+              <strong>Bennis Othmane</strong>
+              <br/>
+              Brief biography describing your interests and skills, a profile photo, and/or links to your Github, Linkedin, and other <strong>professional</strong> social media accounts.
+              <br/>
+              <!-- find brand icons at: https://fontawesome.com/icons?d=gallery&s=brands&m=free -->
+              <a href="https://github.com/">
+                <span class="fab fa-github"></span>
+                <span>Github</span>
+              </a>
+              &bullet;
+              <a href="https://www.linkedin.com/">
+                <span class="fab fa-linkedin"></span>
+                <span>LinkedIn</span>
+              </a>
+            </p>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <small>
+        <a href="#top">
+          <span class="fas fa-arrow-up"></span>
+          <span>Back to Top</span>
+        </a>
+        <br/>
+        <a href="https://www.neoma-bs.fr/formations/masteres-specialises-masters-of-science-temps-partiel/msc-in-finance-and-big-data/presentation-du-programme">MSc Finance & Big Data / Data visualization</a>
+        &bullet;
+        <a href="https://https://www.neoma-bs.fr/">Neoma Business School</a>
+      </small>
+    </div>
+  </footer>
+
+</body>
+</html>
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
